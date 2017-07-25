@@ -1,0 +1,47 @@
+@font-face{
+        font-family: "UGent";
+        src: url('http://users.ugent.be/~sjversto/fonts/ugentpannotext-normal-web.ttf'),
+        url('http://users.ugent.be/~sjversto/ugentpannotext-normal-web.eot'); /* IE */
+}
+.ugentstyle {
+    font-family: "UGent";
+}
+
+body {
+    max-width:500px;
+    background-color: white;
+    margin-left: 15px;
+}
+
+hr {
+    height: 1px;
+    color: black;
+    background: black;
+    font-size: 0;
+    border: 0;
+}
+
+h1 {
+    color: maroon;
+    margin-left: 40px;
+}
+
+table.realtable {
+    border-collapse: collapse;
+}
+
+table.realtable, table.realtable th, table.realtable td {
+   border: 1px solid grey;
+}
+
+table.realtable th, table.realtable td {
+    padding: 10px;
+    text-align: left;
+}
+
+table.realtable tr:hover {background-color: #f5f5f5}
+
+ul.a {list-style-type: circle;}
+ul.b {list-style-type: square;}
+ol.c {list-style-type: upper-roman;}
+ol.d {list-style-type: lower-alpha;}

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sam Verstocken</title>
+<link rel="stylesheet" type="text/css" href="http://users.ugent.be/~sjversto/stylesheet.css">
+</head>
+<body>
+<div class="ugentstyle"><table>
+<tr>
+<td><img src="http://users.ugent.be/~sjversto/images/sam.png" height=100></td>
+<td>Sam Verstocken<br><a href="mailto:sam.verstocken@ugent.be">sam.verstocken@ugent.be</a><br>PhD student at Ghent University<br>under the supervision of Prof. Maarten Baes</td>
+</tr>
+</table><hr><table>
+<tr>
+<td><img src="http://users.ugent.be/~sjversto/images/skirt.png" height=100></td>
+<td><img src="http://users.ugent.be/~sjversto/images/ugent.png" height=100></td>
+</tr>
+</table><hr><br><span style='font-size:20px'><span style='text-decoration: underline;'>Hybrid task+data parallelization in Monte Carlo radiative transfer code SKIRT</span></span><br><a href="mailto:sam.verstocken@ugent.be"><span style='font-weight:bold'>Sam Verstocken</span></a>, <a href="mailto:dries">Dries Van De Putte</a>, <a href="mailto:peter">Peter Camps</a>, <a href="mailto:maarten">Maarten Baes</a><br><br><hr><br><small>
+We designed and implemented a new hybrid parallelization scheme in our 
+Monte Carlo radiative transfer code SKIRT, which has been used extensively for modeling the 
+continuum radiation of dusty astrophysical systems including late-type galaxies and dusty tori. 
+The hybrid scheme combines distributed memory parallelization, using the standard Message Passing 
+Interface (MPI) to communicate between processes, and shared memory parallelization, providing 
+multiple execution threads within each process to avoid duplication of data structures. The synchronization 
+between multiple threads is accomplished through atomic operations without high-level locking (also called 
+lock-free programming). This improves the scaling behavior of the code and substantially simplifies the 
+implementation of the hybrid scheme. The result is an extremely flexible solution that adjusts to the number of 
+available nodes, processors and memory, and consequently performs well on a wide variety of computing 
+architectures.</small><br><br><hr><br>Paper:<br><br><li><a href="http://adsabs.harvard.edu/abs/2017A%26C....20...16V">ADS</a><li><a href="http://www.sciencedirect.com/science/article/pii/S221313371730001X">ScienceDirect</a><br><br><hr><table>
+<tr>
+<td><img src="http://users.ugent.be/~sjversto/images/ugent.png" height=100></td>
+<td><img src="http://users.ugent.be/~sjversto/images/eu.jpg" height=40><img src="http://users.ugent.be/~sjversto/images/fp7.png" height=40><br><img src="http://users.ugent.be/~sjversto/images/dustpedia.png" height=50></td>
+</tr>
+</table><hr><br><span style='font-size:20px'><span style='text-decoration: underline;'>High resolution 3D radiative transfer modeling of DustPedia galaxies</span></span><br><a href="mailto:sam.verstocken@ugent.be"><span style='font-weight:bold'>Sam Verstocken</span></a>, <a href="mailto:sebastien.viaene@ugent.be">Sébastien Viaene</a>, <a href="mailto:ilsed">Ilse De Looze</a>, <a href="mailto:Ana">Ana Trcka</a>, <a href="mailto:angelos">Angelos Neseserian</a>, <a href="mailto:maarten.baes@ugent.be">Maarten Baes</a><br><br><table class=realtable>
+<tr>
+<td><a href="M81.html">M81</a></td>
+<td>In progress</td>
+<td>Sam Verstocken</td>
+</tr>
+<tr>
+<td>M77</td>
+<td>Preparation stage</td>
+<td>Sébastien Viaene</td>
+</tr>
+<tr>
+<td>NGC 1365</td>
+<td>Future</td>
+<td>Angelos Neseserian</td>
+</tr>
+</table><br>Interesting links:<br><br><li><a href="http://www.dustpedia.com">DustPedia.com</a><li><a href="http://dustpedia.astro.noa.gr">DustPedia Archive</a><li><a href="https://en.wikipedia.org/wiki/DustPedia">DustPedia on WikiPedia</a><br><br><hr><br><small>DustPedia is a collaborative focused research project supported by the European Union under the Seventh Framework Programme (2007-2013) call (proposal no. 606847). The participating institutions are: Cardiff University, UK; National Observatory of Athens, Greece; Ghent University, Belgium; Université Paris Sud, France; National Institute for Astrophysics, Italy and CEA (Paris), France.</small><br><br><hr><br><div style='text-align:center;'>2017</div></div>
+</body>
+</html>
+
