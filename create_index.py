@@ -4,40 +4,71 @@
 # -----------------------------------------------------------------
 
 # Import standard modules
-import webbrowser
+import inspect
 
 # Import PTS classes and modules
 from pts.core.tools import html
 from pts.core.tools import filesystem as fs
-from pts.core.remote.mounter import RemoteMounter
-from pts.core.remote.host import Host
-from pts.core.tools import introspection
+from pts.core.tools import time
+from pts.core.basics.configuration import ConfigurationDefinition, parse_arguments
 
 # -----------------------------------------------------------------
 
-username, password = introspection.get_account("ugent.be")
-
-# -----------------------------------------------------------------
-
-# Create host
-host = Host("www", name="files.ugent.be", user=username, password=password, mount_point=username + "/www/users", protocol="smb")
-
-# Mount
-mounter = RemoteMounter()
-mount_path = mounter.mount(host)
+definition = ConfigurationDefinition(write_config=False)
+definition.add_flag("show", "show index page", False)
+config = parse_arguments("create_index", definition)
 
 # -----------------------------------------------------------------
 
 base_url = "http://users.ugent.be/~sjversto"
-stylesheet_url = fs.join(base_url, "stylesheet.css")
-images_url = fs.join(base_url, "images")
-fonts_url = fs.join(base_url, "fonts")
+skirt_repo_url = "https://github.com/SKIRT/SKIRT8"
 
-skirt_url = fs.join(images_url, "skirt.png")
-ugent_url = fs.join(images_url, "ugent.png")
-dustpedia_url = fs.join(images_url, "dustpedia.png")
-eu_url = fs.join(images_url, "eu.jpg")
-fp7_url = fs.join(images_url, "fp7.png")
+# -----------------------------------------------------------------
+
+this_filepath = fs.absolute_or_in_cwd(inspect.getfile(inspect.currentframe()))
+directory_path = fs.directory_of(this_filepath)
+logos_path = fs.join(directory_path, "Logos")
+images_path = fs.join(directory_path, "Images")
+fonts_path = fs.join(directory_path, "Fonts")
+
+# -----------------------------------------------------------------
+
+index_path = fs.join(directory_path, "index.html")
+
+# -----------------------------------------------------------------
+
+dustpedia_logos_path = fs.join(logos_path, "DustPedia")
+ugent_logos_path = fs.join(logos_path, "UGent")
+github_logos_path = fs.join(logos_path, "GitHub")
+eu_logos_path = fs.join(logos_path, "EU")
+skirt_logos_path = fs.join(logos_path, "SKIRT")
+
+# -----------------------------------------------------------------
+
+me_path = fs.join(images_path, "sam.png")
+skirt_path = fs.join(skirt_logos_path, "skirt.png")
+ugent_path = fs.join(ugent_logos_path, "ugent.png")
+dustpedia_path = fs.join(dustpedia_logos_path, "dustpedia.png")
+eu_path = fs.join(eu_logos_path, "eu.jpg")
+fp7_path = fs.join(eu_logos_path, "fp7.png")
+github_path = fs.join(github_logos_path, "github.png")
+github_grey_path = fs.join(github_logos_path, "github-grey.png")
+
+# -----------------------------------------------------------------
+
+stylesheet_path = fs.join(directory_path, "stylesheet.css")
+
+# -----------------------------------------------------------------
+
+my_email = "sam.verstocken@ugent.be"
+maarten_email = "maarten.baes@ugent.be"
+peter_email = "peter.camps@ugent.be"
+dries_email = "drvdputt.VanDePutte@UGent.be"
+marjorie_email = "Marjorie.Decleir@UGent.be"
+sebastien_email = "sebastien.viaene@ugent.be"
+ana_email = "Ana.Trcka@UGent.be"
+angelos_email = "ag.nersesian@gmail.com"
+ilse_email = "Ilse.DeLooze@UGent.be"
 
 # -----------------------------------------------------------------
 
@@ -47,7 +78,7 @@ body = ""
 
 kwargs = dict()
 kwargs["title"] = "Sam Verstocken"
-kwargs["head"] = html.link_stylesheet_header_template.format(url=stylesheet_url)
+kwargs["head"] = html.link_stylesheet_header_template.format(url=stylesheet_path)
 
 # -----------------------------------------------------------------
 
@@ -56,7 +87,7 @@ text += html.newline + html.mailto("sam.verstocken@ugent.be")
 text += html.newline + "PhD student at Ghent University"
 text += html.newline + "under the supervision of Prof. Maarten Baes"
 
-rows = [[html.image(fs.join(images_url, "sam.png"), height=100), text]]
+rows = [[html.image(me_path, height=100), text]]
 table = html.SimpleTable(rows)
 body += str(table)
 
@@ -66,7 +97,7 @@ body += str(table)
 
 # -----------------------------------------------------------------
 
-body += html.line
+body += html.make_line("heavy")
 
 # -----------------------------------------------------------------
 
@@ -84,7 +115,7 @@ available nodes, processors and memory, and consequently performs well on a wide
 architectures."""
 
 # Logos
-rows = [[html.image(skirt_url, height=100), html.image(ugent_url, height=100)]]
+rows = [[html.image(skirt_path, height=100), html.image(ugent_path, height=100), html.hyperlink(skirt_repo_url, html.image(github_grey_path, height=80, hover=github_path))]]
 table = html.SimpleTable(rows)
 body += str(table) + html.line
 
@@ -94,26 +125,36 @@ title = html.fontsize_template.format(size=20, text=html.underline_template.form
 
 body += html.newline + title + html.newline
 
-body += html.mailto("sam.verstocken@ugent.be", html.bold_template.format(text="Sam Verstocken")) + ", "
-body += html.mailto("dries", "Dries Van De Putte") + ", "
-body += html.mailto("peter", "Peter Camps") + ", "
-body += html.mailto("maarten", "Maarten Baes")
+body += html.mailto(my_email, html.bold_template.format(text="Sam Verstocken")) + ", "
+body += html.mailto(dries_email, "Dries Van De Putte") + ", "
+body += html.mailto(peter_email, "Peter Camps") + ", "
+body += html.mailto(maarten_email, "Maarten Baes")
 
 body += html.newline + html.newline + html.line
 body += html.newline
 body += html.small_template.format(text=abstract)
+
 body += html.newline + html.newline + html.line + html.newline
 body += "Paper:" + html.newline + html.newline
-body += "<li>" + html.hyperlink("http://adsabs.harvard.edu/abs/2017A%26C....20...16V", "ADS")
-body += "<li>" + html.hyperlink("http://www.sciencedirect.com/science/article/pii/S221313371730001X", "ScienceDirect")
-body += html.newline + html.newline + html.line
+body += html.item + html.hyperlink("http://adsabs.harvard.edu/abs/2017A%26C....20...16V", "ADS")
+body += html.item + html.hyperlink("http://www.sciencedirect.com/science/article/pii/S221313371730001X", "ScienceDirect")
+
+body += html.newline + html.newline + html.line + html.newline
+
+body += "Useful links:" + html.newline + html.newline
+body += html.item + html.hyperlink(skirt_repo_url, "SKIRT repository on GitHub")
+body += html.item + html.hyperlink("http://www.skirt.ugent.be/skirt/index.html", "SKIRT documentation")
+body += html.item + html.hyperlink("http://www.skirt.ugent.be/skirt/_parallelization.html", "Parallelization in SKIRT")
+body += html.item + html.hyperlink("http://www.skirt.ugent.be/tutorials/_tutorial_parallelization.html", "SKIRT parallelization tutorial")
+
+body += html.newline + html.newline + html.make_line("heavy") + html.newline
 
 # -----------------------------------------------------------------
 
-other_images = html.image(eu_url, height=40) + html.image(fp7_url, height=40) + html.newline + html.image(dustpedia_url, height=50)
+other_images = html.image(eu_path, height=40) + html.image(fp7_path, height=40) + html.newline + html.image(dustpedia_path, height=50)
 
 # Logos
-rows = [[html.image(ugent_url, height=100), other_images]]
+rows = [[html.image(ugent_path, height=100), other_images]]
 table = html.SimpleTable(rows)
 body += str(table) + html.line
 
@@ -123,9 +164,9 @@ title = html.fontsize_template.format(size=20, text=html.underline_template.form
 
 body += html.newline + title + html.newline
 
-body += html.mailto("sam.verstocken@ugent.be", html.bold_template.format(text="Sam Verstocken")) + ", " + html.mailto("sebastien.viaene@ugent.be", "Sébastien Viaene") + ", "
-body += html.mailto("ilsed", "Ilse De Looze") + ", " + html.mailto("Ana", "Ana Trcka") + ", "
-body += html.mailto("angelos", "Angelos Neseserian") + ", " + html.mailto("maarten.baes@ugent.be", "Maarten Baes")
+body += html.mailto(my_email, html.bold_template.format(text="Sam Verstocken")) + ", " + html.mailto(sebastien_email, "Sébastien Viaene") + ", "
+body += html.mailto(ilse_email, "Ilse De Looze") + ", " + html.mailto(ana_email, "Ana Trcka") + ", "
+body += html.mailto(angelos_email, "Angelos Neseserian") + ", " + html.mailto(maarten_email, "Maarten Baes")
 body += html.newline + html.newline
 
 rows = [[html.hyperlink("M81.html", "M81"), "In progress", "Sam Verstocken"], ["M77", "Preparation stage", "Sébastien Viaene"], ["NGC 1365", "Future", "Angelos Neseserian"]]
@@ -140,7 +181,7 @@ body += html.newline + html.newline
 
 # Set
 acknowledgement = "DustPedia is a collaborative focused research project supported by the European Union under the Seventh Framework Programme (2007-2013) call (proposal no. 606847). The participating institutions are: Cardiff University, UK; National Observatory of Athens, Greece; Ghent University, Belgium; Université Paris Sud, France; National Institute for Astrophysics, Italy and CEA (Paris), France."
-body += html.line + html.newline + html.small_template.format(text=acknowledgement) + html.newline + html.newline + html.line
+body += html.line + html.newline + html.small_template.format(text=acknowledgement) + html.newline + html.newline + html.make_line("heavy")
 
 # -----------------------------------------------------------------
 
@@ -159,22 +200,12 @@ template = html.page_template.format(**kwargs)
 
 # -----------------------------------------------------------------
 
-# Determine filename
-filename = "index.html"
-filepath = fs.join(mount_path, filename)
-
 # Write
-fs.write_text(filepath, template)
-
-# -----------------------------------------------------------------
-
-# Unmount
-mounter.unmount(host)
+fs.write_text(index_path, template)
 
 # -----------------------------------------------------------------
 
 # Open
-webbrowser._tryorder = ["safari"]
-webbrowser.open(base_url, new=2)
+if config.show: fs.open_in_browser(index_path)
 
 # -----------------------------------------------------------------

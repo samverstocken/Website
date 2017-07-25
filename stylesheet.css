@@ -15,10 +15,16 @@ body {
 
 hr {
     height: 1px;
-    color: black;
-    background: black;
+    color: grey;
+    background: grey;
     font-size: 0;
     border: 0;
+}
+
+hr.heavy {
+    height: 4px;
+    color: grey;
+    background: grey;
 }
 
 h1 {
