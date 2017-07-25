@@ -27,9 +27,16 @@ skirt_repo_url = "https://github.com/SKIRT/SKIRT8"
 
 this_filepath = fs.absolute_or_in_cwd(inspect.getfile(inspect.currentframe()))
 directory_path = fs.directory_of(this_filepath)
-logos_path = fs.join(directory_path, "Logos")
-images_path = fs.join(directory_path, "Images")
-fonts_path = fs.join(directory_path, "Fonts")
+
+# -----------------------------------------------------------------
+
+#logos_path = fs.join(directory_path, "Logos")
+#images_path = fs.join(directory_path, "Images")
+#fonts_path = fs.join(directory_path, "Fonts")
+
+logos_path = "Logos"
+images_path = "Images"
+fonts_path = "Fonts"
 
 # -----------------------------------------------------------------
 
@@ -56,7 +63,8 @@ github_grey_path = fs.join(github_logos_path, "github-grey.png")
 
 # -----------------------------------------------------------------
 
-stylesheet_path = fs.join(directory_path, "stylesheet.css")
+#stylesheet_path = fs.join(directory_path, "stylesheet.css")
+stylesheet_path = "stylesheet.css"
 
 # -----------------------------------------------------------------
 
@@ -169,9 +177,15 @@ body += html.mailto(ilse_email, "Ilse De Looze") + ", " + html.mailto(ana_email,
 body += html.mailto(angelos_email, "Angelos Neseserian") + ", " + html.mailto(maarten_email, "Maarten Baes")
 body += html.newline + html.newline
 
+body += html.line + html.newline
+
+body += "Modelling details:" + html.newline + html.newline
+
 rows = [[html.hyperlink("M81.html", "M81"), "In progress", "Sam Verstocken"], ["M77", "Preparation stage", "Sébastien Viaene"], ["NGC 1365", "Future", "Angelos Neseserian"]]
-table = html.SimpleTable(rows, css_class="realtable")
+table = html.SimpleTable(rows, css_class="hovertable")
 body += str(table) + html.newline
+
+body += html.line + html.newline
 
 body += "Interesting links:" + html.newline + html.newline
 body += html.item + html.hyperlink("http://www.dustpedia.com", "DustPedia.com")
@@ -185,10 +199,11 @@ body += html.line + html.newline + html.small_template.format(text=acknowledgeme
 
 # -----------------------------------------------------------------
 
-footing = "Last updated " + time.pretty_date().lower()
+footing = html.small_template.format(text="Last updated on " + time.pretty_time())
+
+# -----------------------------------------------------------------
 
 # Finish body
-body += html.newline
 body += html.center_template.format(text=footing)
 kwargs["body"] = body
 kwargs["style"] = "ugentstyle"

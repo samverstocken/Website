@@ -1,7 +1,7 @@
 @font-face{
         font-family: "UGent";
-        src: url('http://users.ugent.be/~sjversto/fonts/ugentpannotext-normal-web.ttf'),
-        url('http://users.ugent.be/~sjversto/ugentpannotext-normal-web.eot'); /* IE */
+        src: url('Fonts/ugentpannotext-normal-web.ttf'),
+        url('Fonts/ugentpannotext-normal-web.eot'); /* IE */
 }
 .ugentstyle {
     font-family: "UGent";
@@ -32,22 +32,102 @@ h1 {
     margin-left: 40px;
 }
 
-table.realtable {
+table.realtable, table.hovertable {
     border-collapse: collapse;
 }
 
-table.realtable, table.realtable th, table.realtable td {
+table.realtable, table.realtable th, table.realtable td, table.hovertable, table.hovertable th, table.hovertable td {
    border: 1px solid grey;
 }
 
-table.realtable th, table.realtable td {
+table.realtable th, table.realtable td, table.hovertable th, table.hovertable td {
     padding: 10px;
     text-align: left;
 }
 
-table.realtable tr:hover {background-color: #f5f5f5}
+table.hovertable tr:hover {
+    background-color: lightgrey;
+} /* was #f5f5f5 */
 
+/* Lists */
 ul.a {list-style-type: circle;}
 ul.b {list-style-type: square;}
 ol.c {list-style-type: upper-roman;}
 ol.d {list-style-type: lower-alpha;}
+
+/* FROM https://stackoverflow.com/questions/17584702/how-to-add-a-scrollbar-to-an-html5-table */
+/* USAGE:
+
+<div class="headercontainer">
+  <div class="tablecontainer">
+
+    <table>
+      <thead>
+        <tr>
+          <th>
+            Table attribute name
+            <div>Table attribute name</div>
+          </th>
+          <th>
+            Value
+            <div>Value</div>
+          </th>
+          <th>
+            Description
+            <div>Description</div>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>...</td>
+          <td>...</td>
+          ...
+        </tr>
+        <tr>...</tr>
+        ...
+      </tbody>
+    </table>
+
+  </div>
+</div>
+*/
+
+/* cell padding and bottom border */
+.tablecontainer td, th {
+  border-bottom:1px solid #eee;
+  padding: 10px;
+}
+
+/* make the default header height 0 and make text invisible */
+.tablecontainer th {
+    height: 0px;
+    padding-top: 0;
+    padding-bottom: 0;
+    line-height: 0;
+    visibility: hidden;
+    white-space: nowrap;
+}
+
+/* reposition the divs in the header cells and place in the blank area of the headercontainer */
+.tablecontainer th div{
+  visibility: visible;
+  position: absolute;
+  background: #000;
+  color: #fff;
+  padding: 9px 10px;
+  top: 0;
+  margin-left: -10px;
+  line-height: normal;
+   border-left: 1px solid #222;
+}
+
+/* prevent the left border from above appearing in first div header */
+th:first-child div{
+  border: none;
+}
+
+/* alternate colors for rows */
+.tablecontainer tbody  tr:nth-child(even){
+     background-color: #ddd;
+}
