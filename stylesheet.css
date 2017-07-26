@@ -1,7 +1,7 @@
 @font-face{
         font-family: "UGent";
-        src: url('Fonts/ugentpannotext-normal-web.ttf'),
-        url('Fonts/ugentpannotext-normal-web.eot'); /* IE */
+        src: url('fonts/ugentpannotext-normal-web.ttf'),
+        url('fonts/ugentpannotext-normal-web.eot'); /* IE */
 }
 .ugentstyle {
     font-family: "UGent";

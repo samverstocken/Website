@@ -14,10 +14,13 @@ from pts.core.basics.configuration import ConfigurationDefinition, parse_argumen
 from pts.core.tools import introspection
 from pts.core.tools import git
 from pts.core.tools import terminal
+from pts.core.tools.logging import log
 
 # -----------------------------------------------------------------
 
+# Create configuration
 definition = ConfigurationDefinition(write_config=False)
+definition.add_flag("show", "show the webpage after uploading", False)
 config = parse_arguments("upload", definition)
 
 # -----------------------------------------------------------------
@@ -42,16 +45,19 @@ mathjax_path = fs.join(mount_path, mathjax_name)
 
 # -----------------------------------------------------------------
 
+stylesheet_name = "stylesheet.css"
 index_name = "index.html"
-images_name = "Images"
-logos_name = "Logos"
-fonts_name = "Fonts"
+images_name = "images"
+logos_name = "logos"
+fonts_name = "fonts"
 
 # -----------------------------------------------------------------
 
 this_filepath = fs.absolute_or_in_cwd(inspect.getfile(inspect.currentframe()))
 directory_path = fs.directory_of(this_filepath)
 mathjax_delete_path = fs.join(directory_path, "mathjax_delete.txt")
+
+stylesheet_path = fs.join(directory_path, stylesheet_name)
 index_filepath = fs.join(directory_path, index_name)
 logos_path = fs.join(directory_path, logos_name)
 images_path = fs.join(directory_path, images_name)
@@ -76,6 +82,9 @@ def install_js9():
     This function ...
     :return:
     """
+
+    # Inform the user
+    log.info("Installing JS9 ...")
 
     # Clone into temporary directory
     temp_repo_path = fs.join(introspection.pts_temp_dir, js9_name)
@@ -147,6 +156,9 @@ def install_mathjax():
     :return:
     """
 
+    # Inform the user
+    log.info("Installing MathJax ...")
+
     # Clone into temporary directory
     temp_repo_path = fs.join(introspection.pts_temp_dir, mathjax_name)
     git.clone(mathjax_repo_url, temp_repo_path, show_output=True)
@@ -168,24 +180,22 @@ def install_mathjax():
 
 # -----------------------------------------------------------------
 
-def has_equal_number_of_files(directory_a, directory_b, create=False):
+def upload_stylesheet():
 
     """
     This function ...
-    :param directory_a:
-    :param directory_b:
-    :param create:
     :return:
     """
 
-    nlocal = fs.nfiles_in_path(directory_a, recursive=True)
-    if fs.is_directory(directory_b): nremote = fs.nfiles_in_path(directory_b, recursive=True)
-    else:
-        if create: fs.create_directory(directory_b)
-        else: raise ValueError("The directory '" + directory_b + "' does not exist")
-        nremote = 0
+    # Inform the user
+    log.info("Uploading the stylesheet ...")
 
-    return nlocal == nremote
+    # Syncrhonize
+    mount_stylesheet_path = fs.join(mount_path, stylesheet_name)
+    updated = fs.update_file(stylesheet_path, mount_stylesheet_path, create=True)
+
+    if updated: log.success("Succesfully uploaded the stylesheet")
+    else: log.info("Already up-to-date")
 
 # -----------------------------------------------------------------
 
@@ -196,11 +206,15 @@ def upload_images():
     :return:
     """
 
-    mount_images_path = fs.join(mount_path, images_name)
+    # Inform the user
+    log.info("Uploading the images ...")
 
-    if not has_equal_number_of_files(images_path, mount_images_path, create=True):
-        fs.clear_directory(mount_images_path)
-        fs.copy_from_directory(images_path, mount_images_path)
+    # Synchronize
+    mount_images_path = fs.join(mount_path, images_name)
+    updated = fs.update_directory(images_path, mount_images_path, create=True)
+
+    if updated: log.success("Succesfully uploaded the images")
+    else: log.info("Already up-to-date")
 
 # -----------------------------------------------------------------
 
@@ -211,11 +225,15 @@ def upload_logos():
     :return:
     """
 
-    mount_logos_path = fs.join(mount_path, logos_name)
+    # Inform the user
+    log.info("Uploading the logos ...")
 
-    if not has_equal_number_of_files(logos_path, mount_logos_path, create=True):
-        fs.clear_directory(mount_logos_path)
-        fs.copy_from_directory(logos_path, mount_logos_path)
+    # Synchronize
+    mount_logos_path = fs.join(mount_path, logos_name)
+    updated = fs.update_directory(logos_path, mount_logos_path, create=True)
+
+    if updated: log.success("Succesfully uploaded the logos")
+    else: log.info("Already up-to-date")
 
 # -----------------------------------------------------------------
 
@@ -226,11 +244,15 @@ def upload_fonts():
     :return:
     """
 
-    mount_fonts_path = fs.join(mount_path, fonts_name)
+    # Inform the user
+    log.info("Uploading the fonts ...")
 
-    if not has_equal_number_of_files(fonts_path, mount_fonts_path, create=True):
-        fs.clear_directory(mount_fonts_path)
-        fs.copy_from_directory(fonts_path, mount_fonts_path)
+    # Synchronize
+    mount_fonts_path = fs.join(mount_path, fonts_name)
+    updated = fs.update_directory(fonts_path, mount_fonts_path, create=True)
+
+    if updated: log.success("Succesfully uploaded the fonts")
+    else: log.info("Already up-to-date")
 
 # -----------------------------------------------------------------
 
@@ -241,6 +263,10 @@ def upload_index():
     :return:
     """
 
+    # Inform the user
+    log.info("Uploading the index page ...")
+
+    # Check
     mount_index_path = fs.join(mount_path, index_name)
     if fs.is_file(mount_index_path): fs.remove_file(mount_index_path)
 
@@ -249,12 +275,10 @@ def upload_index():
 
 # -----------------------------------------------------------------
 
-install_js9()
-exit()
-
 # Steps
-if not has_js9(): install_js9()
-if not has_mathjax(): install_mathjax()
+#if not has_js9(): install_js9()
+#if not has_mathjax(): install_mathjax()
+upload_stylesheet()
 upload_images()
 upload_logos()
 upload_fonts()
@@ -266,6 +290,6 @@ mounter.unmount(host)
 # -----------------------------------------------------------------
 
 # Open
-fs.open_in_browser(base_url)
+if config.show: fs.open_in_browser(base_url)
 
 # -----------------------------------------------------------------

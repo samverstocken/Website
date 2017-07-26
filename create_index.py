@@ -34,9 +34,9 @@ directory_path = fs.directory_of(this_filepath)
 #images_path = fs.join(directory_path, "Images")
 #fonts_path = fs.join(directory_path, "Fonts")
 
-logos_path = "Logos"
-images_path = "Images"
-fonts_path = "Fonts"
+logos_path = "logos"
+images_path = "images"
+fonts_path = "fonts"
 
 # -----------------------------------------------------------------
 
