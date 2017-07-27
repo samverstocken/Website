@@ -90,6 +90,10 @@ kwargs["head"] = html.link_stylesheet_header_template.format(url=stylesheet_path
 
 # -----------------------------------------------------------------
 
+body += html.center(html.theme_button)
+
+# -----------------------------------------------------------------
+
 text = "Sam Verstocken"
 text += html.newline + html.mailto("sam.verstocken@ugent.be")
 text += html.newline + "PhD student at Ghent University"

@@ -192,7 +192,7 @@ def upload_stylesheet():
 
     # Syncrhonize
     mount_stylesheet_path = fs.join(mount_path, stylesheet_name)
-    updated = fs.update_file(stylesheet_path, mount_stylesheet_path, create=True)
+    updated = fs.update_file(stylesheet_path, mount_stylesheet_path, create=True, report=log.is_debug())
 
     if updated: log.success("Succesfully uploaded the stylesheet")
     else: log.info("Already up-to-date")
@@ -211,7 +211,7 @@ def upload_images():
 
     # Synchronize
     mount_images_path = fs.join(mount_path, images_name)
-    updated = fs.update_directory(images_path, mount_images_path, create=True)
+    updated = fs.update_directory(images_path, mount_images_path, create=True, report=log.is_debug())
 
     if updated: log.success("Succesfully uploaded the images")
     else: log.info("Already up-to-date")
@@ -230,7 +230,7 @@ def upload_logos():
 
     # Synchronize
     mount_logos_path = fs.join(mount_path, logos_name)
-    updated = fs.update_directory(logos_path, mount_logos_path, create=True)
+    updated = fs.update_directory(logos_path, mount_logos_path, create=True, report=log.is_debug())
 
     if updated: log.success("Succesfully uploaded the logos")
     else: log.info("Already up-to-date")
@@ -249,7 +249,7 @@ def upload_fonts():
 
     # Synchronize
     mount_fonts_path = fs.join(mount_path, fonts_name)
-    updated = fs.update_directory(fonts_path, mount_fonts_path, create=True)
+    updated = fs.update_directory(fonts_path, mount_fonts_path, create=True, report=log.is_debug())
 
     if updated: log.success("Succesfully uploaded the fonts")
     else: log.info("Already up-to-date")
