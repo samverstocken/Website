@@ -13,6 +13,26 @@ body {
     margin-left: 15px;
 }
 
+/* unvisited link */
+a:link {
+    color: #4180d3;
+}
+
+/* visited link */
+a:visited {
+    color: #4180d3;
+}
+
+/* mouse over link */
+a:hover {
+    color: #87baff; /* #9f43c6; */
+}
+
+/* selected link */
+a:active {
+    color: #87baff;
+}
+
 hr {
     height: 1px;
     color: grey;
