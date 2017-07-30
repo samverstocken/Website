@@ -80,17 +80,17 @@ ilse_email = "Ilse.DeLooze@UGent.be"
 
 # -----------------------------------------------------------------
 
-body = ""
+title = "Sam Verstocken"
+style = "ugentstyle"
 
 # -----------------------------------------------------------------
 
-kwargs = dict()
-kwargs["title"] = "Sam Verstocken"
-kwargs["head"] = html.link_stylesheet_header_template.format(url=stylesheet_path)
+# Create the page
+page = html.HTMLPage(title, css_path=stylesheet_path, style=style, footing=html.updated_footing())
 
 # -----------------------------------------------------------------
 
-body += html.center(html.theme_button)
+page += html.center(html.theme_button)
 
 # -----------------------------------------------------------------
 
@@ -101,7 +101,7 @@ text += html.newline + "under the supervision of Prof. Maarten Baes"
 
 rows = [[html.image(me_path, height=100), text]]
 table = html.SimpleTable(rows)
-body += str(table)
+page += table
 
 # -----------------------------------------------------------------
 
@@ -109,7 +109,7 @@ body += str(table)
 
 # -----------------------------------------------------------------
 
-body += html.make_line("heavy")
+page += html.make_line("heavy")
 
 # -----------------------------------------------------------------
 
@@ -129,37 +129,41 @@ architectures."""
 # Logos
 rows = [[html.image(skirt_path, height=100), html.image(ugent_path, height=100), html.hyperlink(skirt_repo_url, html.image(github_grey_path, height=80, hover=github_path))]]
 table = html.SimpleTable(rows)
-body += str(table) + html.line
+page += str(table) + html.line
 
 # Create title
 title = "Hybrid task+data parallelization in Monte Carlo radiative transfer code SKIRT"
 title = html.fontsize_template.format(size=20, text=html.underline_template.format(text=title))
 
-body += html.newline + title + html.newline
+page += html.newline + title + html.newline
 
-body += html.mailto(my_email, html.bold_template.format(text="Sam Verstocken")) + ", "
-body += html.mailto(dries_email, "Dries Van De Putte") + ", "
-body += html.mailto(peter_email, "Peter Camps") + ", "
-body += html.mailto(maarten_email, "Maarten Baes")
+page += html.mailto(my_email, html.bold_template.format(text="Sam Verstocken")) + ", "
+page += html.mailto(dries_email, "Dries Van De Putte") + ", "
+page += html.mailto(peter_email, "Peter Camps") + ", "
+page += html.mailto(maarten_email, "Maarten Baes")
 
-body += html.newline + html.newline + html.line
-body += html.newline
-body += html.small_template.format(text=abstract)
+page += html.newline + html.newline + html.line
+page += html.newline
+page += html.small_template.format(text=abstract)
 
-body += html.newline + html.newline + html.line + html.newline
-body += "Paper:" + html.newline + html.newline
-body += html.item + html.hyperlink("http://adsabs.harvard.edu/abs/2017A%26C....20...16V", "ADS")
-body += html.item + html.hyperlink("http://www.sciencedirect.com/science/article/pii/S221313371730001X", "ScienceDirect")
+page += html.newline + html.newline + html.line + html.newline
+page += "Paper:" + html.newline
+items = []
+items.append(html.hyperlink("http://adsabs.harvard.edu/abs/2017A%26C....20...16V", "ADS"))
+items.append(html.hyperlink("http://www.sciencedirect.com/science/article/pii/S221313371730001X", "ScienceDirect"))
+page += html.unordered_list(items)
+page += html.line + html.newline
 
-body += html.newline + html.newline + html.line + html.newline
+page += "Useful links:" + html.newline
+items = []
+items.append(html.hyperlink(skirt_repo_url, "SKIRT repository on GitHub"))
+items.append(html.hyperlink("http://www.skirt.ugent.be/skirt/index.html", "SKIRT documentation"))
+items.append(html.hyperlink("http://www.skirt.ugent.be/skirt/_parallelization.html", "Parallelization in SKIRT"))
+items.append(html.hyperlink("http://www.skirt.ugent.be/tutorials/_tutorial_parallelization.html", "SKIRT parallelization tutorial"))
+page += html.unordered_list(items)
 
-body += "Useful links:" + html.newline + html.newline
-body += html.item + html.hyperlink(skirt_repo_url, "SKIRT repository on GitHub")
-body += html.item + html.hyperlink("http://www.skirt.ugent.be/skirt/index.html", "SKIRT documentation")
-body += html.item + html.hyperlink("http://www.skirt.ugent.be/skirt/_parallelization.html", "Parallelization in SKIRT")
-body += html.item + html.hyperlink("http://www.skirt.ugent.be/tutorials/_tutorial_parallelization.html", "SKIRT parallelization tutorial")
-
-body += html.newline + html.newline + html.make_line("heavy") + html.newline
+#page += html.newline + html.newline
+page += html.make_line("heavy") + html.newline
 
 # -----------------------------------------------------------------
 
@@ -168,59 +172,43 @@ other_images = html.image(eu_path, height=40) + html.image(fp7_path, height=40) 
 # Logos
 rows = [[html.image(ugent_path, height=100), other_images]]
 table = html.SimpleTable(rows)
-body += str(table) + html.line
+page += str(table) + html.line
 
 # Create title
 title = "High resolution 3D radiative transfer modeling of DustPedia galaxies"
 title = html.fontsize_template.format(size=20, text=html.underline_template.format(text=title))
 
-body += html.newline + title + html.newline
+page += html.newline + title + html.newline
 
-body += html.mailto(my_email, html.bold_template.format(text="Sam Verstocken")) + ", " + html.mailto(sebastien_email, "Sébastien Viaene") + ", "
-body += html.mailto(ilse_email, "Ilse De Looze") + ", " + html.mailto(ana_email, "Ana Trcka") + ", "
-body += html.mailto(angelos_email, "Angelos Neseserian") + ", " + html.mailto(maarten_email, "Maarten Baes")
-body += html.newline + html.newline
+page += html.mailto(my_email, html.bold_template.format(text="Sam Verstocken")) + ", " + html.mailto(sebastien_email, "Sébastien Viaene") + ", "
+page += html.mailto(ilse_email, "Ilse De Looze") + ", " + html.mailto(ana_email, "Ana Trcka") + ", "
+page += html.mailto(angelos_email, "Angelos Neseserian") + ", " + html.mailto(maarten_email, "Maarten Baes")
+page += html.newline + html.newline
 
-body += html.line + html.newline
+page += html.line + html.newline
 
-body += "Modelling details:" + html.newline + html.newline
+page += "Modelling details:" + html.newline + html.newline
 
 rows = [[html.hyperlink("M81.html", "M81"), "In progress", "Sam Verstocken"], ["M77", "Preparation stage", "Sébastien Viaene"], ["NGC 1365", "Future", "Angelos Neseserian"]]
 table = html.SimpleTable(rows, css_class="hovertable")
-body += str(table) + html.newline
+page += str(table) + html.newline
 
-body += html.line + html.newline
+page += html.line + html.newline
 
-body += "Interesting links:" + html.newline + html.newline
-body += html.item + html.hyperlink("http://www.dustpedia.com", "DustPedia.com")
-body += html.item + html.hyperlink("http://dustpedia.astro.noa.gr", "DustPedia Archive")
-body += html.item + html.hyperlink("https://en.wikipedia.org/wiki/DustPedia", "DustPedia on WikiPedia")
-body += html.newline + html.newline
+page += "Interesting links:" + html.newline
+items = []
+items.append(html.hyperlink("http://www.dustpedia.com", "DustPedia.com"))
+items.append(html.hyperlink("http://dustpedia.astro.noa.gr", "DustPedia Archive"))
+items.append(html.hyperlink("https://en.wikipedia.org/wiki/DustPedia", "DustPedia on WikiPedia"))
+page += html.unordered_list(items)
 
 # Set
 acknowledgement = "DustPedia is a collaborative focused research project supported by the European Union under the Seventh Framework Programme (2007-2013) call (proposal no. 606847). The participating institutions are: Cardiff University, UK; National Observatory of Athens, Greece; Ghent University, Belgium; Université Paris Sud, France; National Institute for Astrophysics, Italy and CEA (Paris), France."
-body += html.line + html.newline + html.small_template.format(text=acknowledgement) + html.newline + html.newline + html.make_line("heavy")
+page += html.line + html.newline + html.small_template.format(text=acknowledgement) + html.newline + html.newline + html.make_line("heavy")
 
-# -----------------------------------------------------------------
 
-footing = html.small_template.format(text="Last updated on " + time.pretty_time())
-
-# -----------------------------------------------------------------
-
-# Finish body
-body += html.center_template.format(text=footing)
-kwargs["body"] = body
-kwargs["style"] = "ugentstyle"
-
-# -----------------------------------------------------------------
-
-# Get the template
-template = html.page_template.format(**kwargs)
-
-# -----------------------------------------------------------------
-
-# Write
-fs.write_text(index_path, template)
+# Write the page
+page.saveto(index_path)
 
 # -----------------------------------------------------------------
 
