@@ -66,6 +66,30 @@ fonts_path = fs.join(directory_path, fonts_name)
 
 # -----------------------------------------------------------------
 
+parallelization_name = "parallelization"
+modelling_name = "modelling"
+dustpedia_name = "dustpedia"
+
+# -----------------------------------------------------------------
+
+def create_directories():
+
+    """
+    This function ...
+    :return:
+    """
+
+    parallelization_path = fs.join(mount_path, parallelization_name)
+    if not fs.is_directory(parallelization_path): fs.create_directory(parallelization_path)
+
+    modelling_path = fs.join(mount_path, modelling_name)
+    if not fs.is_directory(modelling_path): fs.create_directory(modelling_path)
+
+    dustpedia_path = fs.join(mount_path, dustpedia_name)
+    if not fs.is_directory(dustpedia_path): fs.create_directory(dustpedia_path)
+
+# -----------------------------------------------------------------
+
 def has_js9():
 
     """
@@ -281,6 +305,7 @@ def upload_index():
 # -----------------------------------------------------------------
 
 # Steps
+create_directories()
 #if not has_js9(): install_js9()
 #if not has_mathjax(): install_mathjax()
 upload_stylesheet()
