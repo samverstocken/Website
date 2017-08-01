@@ -15,6 +15,7 @@ from pts.core.tools import introspection
 from pts.core.tools import git
 from pts.core.tools import terminal
 from pts.core.tools.logging import log
+from pts.core.tools import browser
 
 # -----------------------------------------------------------------
 
@@ -135,6 +136,10 @@ def install_js9():
     # start helper
     #cd path_to_web_install
     #node js9Helper.js 2>&1 > js9node.log &
+
+    # in js9.js:
+    # line 151: mousetouchZoom: false,	// use mouse wheel, pinch to zoom?
+    # i replaced 'false' to 'true'.
 
 # -----------------------------------------------------------------
 
@@ -290,6 +295,6 @@ mounter.unmount(host)
 # -----------------------------------------------------------------
 
 # Open
-if config.show: fs.open_in_browser(base_url)
+if config.show: browser.open_url(base_url)
 
 # -----------------------------------------------------------------

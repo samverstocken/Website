@@ -9,8 +9,8 @@ import inspect
 # Import PTS classes and modules
 from pts.core.tools import html
 from pts.core.tools import filesystem as fs
-from pts.core.tools import time
 from pts.core.basics.configuration import ConfigurationDefinition, parse_arguments
+from pts.core.tools import browser
 
 # -----------------------------------------------------------------
 
@@ -90,7 +90,7 @@ page = html.HTMLPage(title, css_path=stylesheet_path, style=style, footing=html.
 
 # -----------------------------------------------------------------
 
-page += html.center(html.theme_button)
+page += html.center(html.make_theme_button())
 
 # -----------------------------------------------------------------
 
@@ -213,6 +213,6 @@ page.saveto(index_path)
 # -----------------------------------------------------------------
 
 # Open
-if config.show: fs.open_in_browser(index_path)
+if config.show: browser.open_path(index_path)
 
 # -----------------------------------------------------------------
