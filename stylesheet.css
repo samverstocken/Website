@@ -52,20 +52,20 @@ h1 {
     margin-left: 40px;
 }
 
-table.realtable, table.hovertable {
+table.realtable, table.hovertable, table.sortable{
     border-collapse: collapse;
 }
 
-table.realtable, table.realtable th, table.realtable td, table.hovertable, table.hovertable th, table.hovertable td {
+table.realtable, table.realtable th, table.realtable td, table.hovertable, table.hovertable th, table.hovertable td, table.sortable, table.sortable th, table.sortable td {
    border: 1px solid grey;
 }
 
-table.realtable th, table.realtable td, table.hovertable th, table.hovertable td {
+table.realtable th, table.realtable td, table.hovertable th, table.hovertable td, table.sortable th, table.sortable td {
     padding: 10px;
     text-align: left;
 }
 
-table.hovertable tr:hover {
+table.hovertable tr:hover, table.sortable tr:hover{
     background-color: lightgrey;
 } /* was #f5f5f5 */
 
@@ -151,3 +151,52 @@ th:first-child div{
 .tablecontainer tbody  tr:nth-child(even){
      background-color: #ddd;
 }
+
+/* To center the content of divs */
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Sortable tables */
+table.sortable thead {
+    background-color:#eee;
+    color:#666666;
+    font-weight: bold;
+    cursor: default;
+}
+
+/* FOR IMAGE PREVIEW */
+pre{
+        display:block;
+        font:100% "Courier New", Courier, monospace;
+        padding:10px;
+        border:1px solid #bae2f0;
+        background:#e3f4f9;	
+        margin:.5em 0;
+        overflow:auto;
+        width:800px;
+}
+
+img, img.previewimg {
+    border:none;
+}
+
+img.previewimg {
+    width:100%;
+    max-width:400px;
+}
+
+/*  */
+
+#preview{
+    position:absolute;
+    border:1px solid #ccc;
+    background:#333;
+    padding:5px;
+    display:none;
+    color:#fff;
+}
+
+/*  */

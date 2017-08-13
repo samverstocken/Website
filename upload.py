@@ -14,7 +14,7 @@ from pts.core.basics.configuration import ConfigurationDefinition, parse_argumen
 from pts.core.tools import introspection
 from pts.core.tools import git
 from pts.core.tools import terminal
-from pts.core.tools.logging import log
+from pts.core.basics.log import log
 from pts.core.tools import browser
 
 # -----------------------------------------------------------------
@@ -46,6 +46,8 @@ mathjax_path = fs.join(mount_path, mathjax_name)
 
 # -----------------------------------------------------------------
 
+sortable_script_name = "sorttable.js"
+preview_script_name = "preview.js"
 stylesheet_name = "stylesheet.css"
 index_name = "index.html"
 images_name = "images"
@@ -58,6 +60,8 @@ this_filepath = fs.absolute_or_in_cwd(inspect.getfile(inspect.currentframe()))
 directory_path = fs.directory_of(this_filepath)
 mathjax_delete_path = fs.join(directory_path, "mathjax_delete.txt")
 
+sortable_script_path = fs.join(directory_path, sortable_script_name)
+preview_script_path = fs.join(directory_path, preview_script_name)
 stylesheet_path = fs.join(directory_path, stylesheet_name)
 index_filepath = fs.join(directory_path, index_name)
 logos_path = fs.join(directory_path, logos_name)
@@ -209,6 +213,56 @@ def install_mathjax():
 
 # -----------------------------------------------------------------
 
+def upload_scripts():
+
+    """
+    This function ...
+    :return:
+    """
+
+    # Inform the user
+    log.info("Uploading the scripts ...")
+
+    # Upload the sortable script
+    upload_sortable_script()
+
+    # Upload the preview script
+    upload_preview_script()
+
+# -----------------------------------------------------------------
+
+def upload_sortable_script():
+
+    """
+    This function ...
+    :return:
+    """
+
+    # Synchronize
+    mount_sortable_script_path = fs.join(mount_path, sortable_script_name)
+    updated = fs.update_file(sortable_script_path, mount_sortable_script_path, create=True, report=log.is_debug())
+
+    if updated: log.success("Succesfully uploaded the script")
+    else: log.info("Already up-to-date")
+
+# -----------------------------------------------------------------
+
+def upload_preview_script():
+
+    """
+    This function ...
+    :return:
+    """
+
+    # Synchronize
+    mount_preview_script_path = fs.join(mount_path, preview_script_name)
+    updated = fs.update_file(preview_script_path, mount_preview_script_path, create=True, report=log.is_debug())
+
+    if updated: log.success("Succesfully uploaded the script")
+    else: log.info("Already up-to-date")
+
+# -----------------------------------------------------------------
+
 def upload_stylesheet():
 
     """
@@ -308,6 +362,7 @@ def upload_index():
 create_directories()
 #if not has_js9(): install_js9()
 #if not has_mathjax(): install_mathjax()
+upload_scripts()
 upload_stylesheet()
 upload_images()
 upload_logos()
