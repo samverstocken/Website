@@ -21,7 +21,7 @@ config = parse_arguments("create_index", definition)
 # -----------------------------------------------------------------
 
 base_url = "http://users.ugent.be/~sjversto"
-skirt_repo_url = "https://github.com/SKIRT/SKIRT8"
+skirt_repo_url = "http://github.com/SKIRT/SKIRT8"
 
 # -----------------------------------------------------------------
 
@@ -182,17 +182,13 @@ page += html.newline + title + html.newline
 
 page += html.mailto(my_email, html.bold_template.format(text="Sam Verstocken")) + ", " + html.mailto(sebastien_email, "Sébastien Viaene") + ", "
 page += html.mailto(ilse_email, "Ilse De Looze") + ", " + html.mailto(ana_email, "Ana Trcka") + ", "
-page += html.mailto(angelos_email, "Angelos Neseserian") + ", " + html.mailto(maarten_email, "Maarten Baes")
+page += html.mailto(angelos_email, "Angelos Nersesian") + ", " + html.mailto(maarten_email, "Maarten Baes")
 page += html.newline + html.newline
 
+# Link to modeling page
 page += html.line + html.newline
-
-page += "Modelling details:" + html.newline + html.newline
-
-rows = [[html.hyperlink("M81.html", "M81"), "In progress", "Sam Verstocken"], ["M77", "Preparation stage", "Sébastien Viaene"], ["NGC 1365", "Future", "Angelos Neseserian"]]
-table = html.SimpleTable(rows, css_class="hovertable")
-page += str(table) + html.newline
-
+page += "Go to the " + html.hyperlink("modeling.html", "modeling page")
+page += html.newline + html.newline
 page += html.line + html.newline
 
 page += "Interesting links:" + html.newline
