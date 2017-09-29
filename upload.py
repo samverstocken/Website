@@ -27,7 +27,7 @@ config = parse_arguments("upload", definition)
 # -----------------------------------------------------------------
 
 base_url = "http://users.ugent.be/~sjversto"
-js9_repo_url = "https://github.com/ericmandel/js9"
+js9_repo_url = "http://github.com/ericmandel/js9"
 mathjax_repo_url = "git://github.com/mathjax/MathJax.git"
 
 # -----------------------------------------------------------------
@@ -46,10 +46,24 @@ mathjax_path = fs.join(mount_path, mathjax_name)
 
 # -----------------------------------------------------------------
 
+# Scripts
 sortable_script_name = "sorttable.js"
 preview_script_name = "preview.js"
+slider_script_name = "slider.js"
+
+# -----------------------------------------------------------------
+
+# Sheets
 stylesheet_name = "stylesheet.css"
+slider_stylesheet_name = "slider.css"
+
+# -----------------------------------------------------------------
+
 index_name = "index.html"
+modeling_name = "modeling.html"
+
+# -----------------------------------------------------------------
+
 images_name = "images"
 logos_name = "logos"
 fonts_name = "fonts"
@@ -60,10 +74,21 @@ this_filepath = fs.absolute_or_in_cwd(inspect.getfile(inspect.currentframe()))
 directory_path = fs.directory_of(this_filepath)
 mathjax_delete_path = fs.join(directory_path, "mathjax_delete.txt")
 
+# Script paths
 sortable_script_path = fs.join(directory_path, sortable_script_name)
 preview_script_path = fs.join(directory_path, preview_script_name)
+slider_script_path = fs.join(directory_path, slider_script_name)
+
+# Sheet paths
 stylesheet_path = fs.join(directory_path, stylesheet_name)
+slider_stylesheet_path = fs.join(directory_path, slider_stylesheet_name)
+
+# Other
 index_filepath = fs.join(directory_path, index_name)
+modeling_filepath = fs.join(directory_path, modeling_name)
+
+# -----------------------------------------------------------------
+
 logos_path = fs.join(directory_path, logos_name)
 images_path = fs.join(directory_path, images_name)
 fonts_path = fs.join(directory_path, fonts_name)
@@ -82,6 +107,9 @@ def create_directories():
     This function ...
     :return:
     """
+
+    # Inform the user
+    log.info("Creating directories ...")
 
     parallelization_path = fs.join(mount_path, parallelization_name)
     if not fs.is_directory(parallelization_path): fs.create_directory(parallelization_path)
@@ -229,6 +257,9 @@ def upload_scripts():
     # Upload the preview script
     upload_preview_script()
 
+    # Upload the slider script
+    upload_slider_script()
+
 # -----------------------------------------------------------------
 
 def upload_sortable_script():
@@ -263,7 +294,23 @@ def upload_preview_script():
 
 # -----------------------------------------------------------------
 
-def upload_stylesheet():
+def upload_slider_script():
+
+    """
+    This function ...
+    :return:
+    """
+
+    # Synchronize
+    mount_slider_script_path = fs.join(mount_path, slider_script_name)
+    updated = fs.update_file(slider_script_path, mount_slider_script_path, create=True, report=log.is_debug())
+
+    if updated: log.success("Succesfully uploaded the script")
+    else: log.info("Already up-to-date")
+
+# -----------------------------------------------------------------
+
+def upload_stylesheets():
 
     """
     This function ...
@@ -271,11 +318,42 @@ def upload_stylesheet():
     """
 
     # Inform the user
-    log.info("Uploading the stylesheet ...")
+    log.info("Uploading the stylesheets ...")
+
+    # Main
+    upload_main_stylesheet()
+
+    # Slider
+    upload_slider_stylesheet()
+
+# -----------------------------------------------------------------
+
+def upload_main_stylesheet():
+
+    """
+    This function ...
+    :return:
+    """
 
     # Syncrhonize
     mount_stylesheet_path = fs.join(mount_path, stylesheet_name)
     updated = fs.update_file(stylesheet_path, mount_stylesheet_path, create=True, report=log.is_debug())
+
+    if updated: log.success("Succesfully uploaded the stylesheet")
+    else: log.info("Already up-to-date")
+
+# -----------------------------------------------------------------
+
+def upload_slider_stylesheet():
+
+    """
+    This function ...
+    :return:
+    """
+
+    # Synchronize
+    mount_slider_path = fs.join(mount_path, slider_stylesheet_name)
+    updated = fs.update_file(slider_stylesheet_path, mount_slider_path, create=True, report=log.is_debug())
 
     if updated: log.success("Succesfully uploaded the stylesheet")
     else: log.info("Already up-to-date")
@@ -358,16 +436,36 @@ def upload_index():
 
 # -----------------------------------------------------------------
 
+def upload_modeling():
+
+    """
+    This function ...
+    :return:
+    """
+
+    # Inform the user
+    log.info("Uploading the modeling page ...")
+
+    # Check
+    mount_modeling_path = fs.join(mount_path, modeling_name)
+    if fs.is_file(mount_modeling_path): fs.remove_file(mount_modeling_path)
+
+    # Copy
+    fs.copy_file(modeling_filepath, mount_path)
+
+# -----------------------------------------------------------------
+
 # Steps
 create_directories()
 #if not has_js9(): install_js9()
 #if not has_mathjax(): install_mathjax()
 upload_scripts()
-upload_stylesheet()
+upload_stylesheets()
 upload_images()
 upload_logos()
 upload_fonts()
 upload_index()
+upload_modeling()
 
 # Unmount
 mounter.unmount(host)
