@@ -35,7 +35,7 @@ mathjax_repo_url = "git://github.com/mathjax/MathJax.git"
 # Mount the remote file system
 host = load_host("www")
 mounter = RemoteMounter()
-mount_path = mounter.mount(host)
+mount_path = mounter.mount(host, pexpect=False)
 
 # -----------------------------------------------------------------
 
@@ -412,6 +412,7 @@ def upload_fonts():
     mount_fonts_path = fs.join(mount_path, fonts_name)
     updated = fs.update_directory(fonts_path, mount_fonts_path, create=True, report=log.is_debug())
 
+    # Inform
     if updated: log.success("Succesfully uploaded the fonts")
     else: log.info("Already up-to-date")
 
@@ -428,11 +429,19 @@ def upload_index():
     log.info("Uploading the index page ...")
 
     # Check
-    mount_index_path = fs.join(mount_path, index_name)
-    if fs.is_file(mount_index_path): fs.remove_file(mount_index_path)
+    #mount_index_path = fs.join(mount_path, index_name)
+    #if fs.is_file(mount_index_path): fs.remove_file(mount_index_path)
 
     # Copy
-    fs.copy_file(index_filepath, mount_path)
+    #fs.copy_file(index_filepath, mount_path)
+
+    # Synchronize
+    mount_index_path = fs.join(mount_path, index_name)
+    updated = fs.update_file(index_filepath, mount_index_path, create=True, report=log.is_debug())
+
+    # Inform
+    if updated: log.success("Succesfully uploaded the index page")
+    else: log.info("Already up-to-date")
 
 # -----------------------------------------------------------------
 
@@ -447,11 +456,19 @@ def upload_modeling():
     log.info("Uploading the modeling page ...")
 
     # Check
-    mount_modeling_path = fs.join(mount_path, modeling_name)
-    if fs.is_file(mount_modeling_path): fs.remove_file(mount_modeling_path)
+    #mount_modeling_path = fs.join(mount_path, modeling_name)
+    #if fs.is_file(mount_modeling_path): fs.remove_file(mount_modeling_path)
 
     # Copy
-    fs.copy_file(modeling_filepath, mount_path)
+    #fs.copy_file(modeling_filepath, mount_path)
+
+    # Synchronize
+    mount_modeling_path = fs.join(mount_path, modeling_name)
+    updated = fs.update_file(modeling_filepath, mount_modeling_path, create=True, report=log.is_debug())
+
+    # Inform
+    if updated: log.success("Succesfully uploaded the modeling page")
+    else: log.info("Already up-to-date")
 
 # -----------------------------------------------------------------
 
