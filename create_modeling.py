@@ -88,7 +88,7 @@ page += title
 page += html.newline + html.newline
 
 # Add modeling table
-rows = [[html.hyperlink("modelling/M81/index.html", "M81"), "In progress", "Sam Verstocken"], ["M77", "Model construction", "Sébastien Viaene"], ["NGC 1365", "Exploration stage", "Angelos Neseserian"]]
+rows = [[html.hyperlink("modelling/M81/index.html", "M81"), "In progress", "Sam Verstocken"], ["M77", "Model construction", "Sébastien Viaene"], ["NGC 1365", "Exploration stage", "Angelos Nersesian"]]
 table = html.SimpleTable(rows, css_class="hovertable")
 page += str(table) + html.newline
 
