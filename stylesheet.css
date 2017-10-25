@@ -195,7 +195,7 @@ pre{
         width:800px;
 }
 
-img, img.previewimg {
+img, img.previewimg, img.invertableimg, img.invertedimg, img.pixelated {
     border:none;
 }
 
@@ -230,3 +230,8 @@ img.pixelated {
 }
 
 /*  */
+
+img.invertedimg {
+   -webkit-filter: invert(1);
+   filter: invert(1);
+}
