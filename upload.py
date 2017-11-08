@@ -44,6 +44,9 @@ mathjax_name = "mathjax"
 js9_path = fs.join(mount_path, js9_name)
 mathjax_path = fs.join(mount_path, mathjax_name)
 
+# Local JS9 path
+local_js9_path = fs.join(fs.home(), "JS9", js9_name)
+
 # -----------------------------------------------------------------
 
 # Scripts
@@ -151,7 +154,7 @@ def install_js9():
     fs.copy_directory(temp_repo_path, mount_path)
 
     # Remove temporary clone
-    #fs.remove_directory(temp_repo_path)
+    fs.remove_directory(temp_repo_path)
 
     js9_web_name = "js9-web"
     temp_web_path = fs.join(introspection.pts_temp_dir, js9_web_name)
@@ -174,7 +177,7 @@ def install_js9():
     # Run desktop:
     # ./node_modules/.bin/electron .
 
-    fs.open_directory(temp_web_path)
+    #fs.open_directory(temp_web_path)
 
     # configure location to install the JS9 web files,
     # where to find cfitsio library and include files,
@@ -196,6 +199,25 @@ def install_js9():
     # in js9.js:
     # line 151: mousetouchZoom: false,	// use mouse wheel, pinch to zoom?
     # i replaced 'false' to 'true'.
+
+# -----------------------------------------------------------------
+
+def upload_js9():
+
+    """
+    Thisn function ...
+    :return:
+    """
+
+    # Inform the user
+    log.info("Uploading JS9 ...")
+
+    # Clone into temporary directory
+    #temp_repo_path = fs.join(introspection.pts_temp_dir, js9_name)
+    #git.clone(js9_repo_url, temp_repo_path, show_output=True)
+
+    # Copy to remote
+    fs.copy_directory(local_js9_path, mount_path)
 
 # -----------------------------------------------------------------
 
@@ -475,6 +497,7 @@ def upload_modeling():
 # Steps
 create_directories()
 #if not has_js9(): install_js9()
+if not has_js9(): upload_js9()
 #if not has_mathjax(): install_mathjax()
 upload_scripts()
 upload_stylesheets()
